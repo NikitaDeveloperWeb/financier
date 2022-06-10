@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\AddComments;
+use app\models\News;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -52,15 +54,40 @@ class NewsController extends Controller
       ],
     ];
   }
-
   /**
    * Displays homepage.
    *
    * @return string
    */
-  public function actionNews()
-
+  public function actionNews($id)
   {
-    return $this->render('news');
+    $news = News::findOne($id);
+    // return $this->render('news', ['news' => $news]);
+
+    $userData = Yii::$app->user->identity;
+    $model = new AddComments();
+    $model->author = $userData['id'];
+    $model->news = $id;
+    $model->date = date("m.d.y");
+    if (isset($_POST['AddComments'])) {
+      $model->attributes = Yii::$app->request->post('AddComments');
+    }
+    if ($model->validate() &&  $model->Add()) {
+      return $this->redirect(['news', 'id' => $id]);
+    }
+    return $this->render('news', ['model' => $model, 'news' => $news]);
+  }
+  /**
+   * Displays homepage.
+   *
+   * @return string
+   */
+  public function actionDeletenews($id)
+  {
+    $model = News::findOne($id);
+    if ($model) {
+      $model->delete();
+    }
+    return $this->redirect(['site/admin']);
   }
 }

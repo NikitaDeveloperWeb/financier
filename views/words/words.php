@@ -8,40 +8,18 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 ?>
 <h1>Словарь</h1>
-<form action="" class="form-search">
-  <input type="text" class="field-main" placeholder="Введите слово">
-  <button class="button-main">Найти</button>
+<?
+$word = '';
+if (isset($_POST['word'])) {
+  $word = $_POST['word'];
+}
+?>
+<form class="form-search" action="<?= Url::to(['/words/search', 'word' => $word]) ?>">
+  <input type="text" class="field-main" placeholder="Введите слово" name="word">
+  <button class="button-main" type="submit">Найти</button>
 </form>
 <ul class="words">
-  <!-- <h2>Найдите слово...</h2> -->
-  <li>
-    <span>
-      <h3>Бизнес</h3>
-    </span>
-    <p> <strong>&mdash;</strong>дело, занятие, предприятие; в русский язык пришло, возможно, через посредство
-      фр.
-      business или
-      непосредственно из английского), предпринима́тельство — деятельность, направленная на систематическое
-      получение прибыли.</p>
-  </li>
-  <li>
-    <span>
-      <h3>Бизнес</h3>
-    </span>
-    <p> <strong>&mdash;</strong>дело, занятие, предприятие; в русский язык пришло, возможно, через посредство
-      фр.
-      business или
-      непосредственно из английского), предпринима́тельство — деятельность, направленная на систематическое
-      получение прибыли.</p>
-  </li>
-  <li>
-    <span>
-      <h3>Бизнес</h3>
-    </span>
-    <p> <strong>&mdash;</strong>дело, занятие, предприятие; в русский язык пришло, возможно, через посредство
-      фр.
-      business или
-      непосредственно из английского), предпринима́тельство — деятельность, направленная на систематическое
-      получение прибыли.</p>
-  </li>
+  <h2>Найдите слово...</h2>
+
+
 </ul>

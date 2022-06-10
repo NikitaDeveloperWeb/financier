@@ -4,77 +4,56 @@
 
 $this->title = 'Financier | новость';
 
+use app\models\Comments;
+use app\models\User;
+use yii\bootstrap4\ActiveForm;
+use yii\bootstrap4\Html;
 use yii\helpers\Url;
 ?>
 
-<h1>Последняя новость</h1>
+<h1><?= $news['title'] ?></h1>
+<?php
 
+?>
 <div class="news-full">
-  <img src="https://w-dog.ru/wallpapers/12/11/441564363585097/svet-cvet-uzor-linii-obem-treugolnik.jpg" alt="" srcset="">
-  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora numquam dolorem odit quaerat, explicabo
-    rem, ad, quos consectetur fuga magnam quam a veritatis assumenda maiores suscipit error nisi amet officia!
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum illo dolorem officia soluta quam corporis, ad
-    cumque sint, ullam, architecto iste cum excepturi! Deserunt consequatur quos hic cupiditate voluptates
-    dolores!
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel ab id vitae doloribus consequuntur, nam
-    aperiam, expedita optio quaerat repellat, facilis tempore ex temporibus totam porro odio enim! Voluptatibus,
-    suscipit!
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam nulla reprehenderit recusandae voluptas
-    nesciunt similique, obcaecati inventore in placeat necessitatibus quo facere architecto doloremque natus qui
-    quibusdam consequuntur, quaerat aperiam!
+
+  <p><?= $news['text'] ?>
   </p>
-  <p>1.04.2022 г.</p>
+  <?= Html::img('@web/image/news/' . $news['image'] . '', ['alt' => 'Удалить', 'class' => 'icon', 'id' => 'arrow']); ?>
+  <p><?= $news['date'] ?> г.</p>
   <button onclick="window.history.back()" class="button-back">Назад</button>
-  <div class="coments">
-    <h2>Коментарии</h2>
-    <form action="">
-      <input type="text" placeholder="Введите текст..." class="field-main" />
-      <button type="submit" class="button-main">Отправить</button>
-    </form>
-    <div class="comments__item">
-      <div class="comments__item__user">
-        <span>
-          <span>
-            <div class="avatar">
-              <p>H</p>
-            </div>
-            <p>Никита Русаков</p>
-          </span>
-          <p>22.03.2022</p>
-        </span>
-        <p>Не особо интересуюсь этой темой.</p>
-      </div>
 
-    </div>
-    <div class="comments__item">
-      <div class="comments__item__user">
-        <span>
-          <span>
-            <div class="avatar">
-              <p>H</p>
-            </div>
-            <p>Никита Русаков</p>
-          </span>
-          <p>22.03.2022</p>
-        </span>
-        <p>Не особо интересуюсь этой темой.</p>
-      </div>
+</div>
 
-    </div>
-    <div class="comments__item">
-      <div class="comments__item__user">
-        <span>
+<div class="coments">
+  <h2>Коментарии</h2>
+  <?php $form = ActiveForm::begin(['options' => ['class' => 'form', 'id' => 'form-comments', 'style' => 'width: 100% !important;'],]) ?>
+  <?= $form->field($model, 'text')->textInput(['autofocus' => true, 'class' => 'field-main', 'placeholder' => 'Введите текст...', 'style' => 'width: 100% !important;'])->label('') ?>
+  <button type="submit" class="button-main">Отправить</button>
+  <?php ActiveForm::end(); ?>
+  <?
+  $commentsAll = Comments::find()->all();
+  foreach ($commentsAll as $comment) {
+    if ($comment['news'] === $news['id']) {
+      $author = User::findOne($comment['author']);
+  ?>
+      <div class="comments__item">
+        <div class="comments__item__user">
           <span>
-            <div class="avatar">
-              <p>H</p>
-            </div>
-            <p>Никита Русаков</p>
+            <span>
+              <div class="avatar">
+                <p><?= mb_substr($author['firstname'], 0, 1) ?></p>
+              </div>
+              <p><?= $author['firstname'] . ' ' . $author['lastname'] ?></p>
+            </span>
+            <p><?= $comment['date'] ?></p>
           </span>
-          <p>22.03.2022</p>
-        </span>
-        <p>Не особо интересуюсь этой темой.</p>
-      </div>
+          <p><?= $comment['text'] ?></p>
+        </div>
 
-    </div>
-  </div>
+      </div>
+  <?     # code...
+    }
+  } ?>
+
 </div>

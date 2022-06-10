@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Words;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -62,5 +63,19 @@ class WordsController extends Controller
   public function actionWords()
   {
     return $this->render('words');
+  }
+  /**
+   * Displays homepage.
+   *
+   * @return string
+   */
+  public function actionSearch($word)
+  {
+    $words = Words::find()->where(['word' => $word])->one();
+    if (isset($words)) {
+      return $this->render('search', ['words' => $words]);
+    } else {
+      return $this->render('words');
+    }
   }
 }

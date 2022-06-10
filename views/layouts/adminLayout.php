@@ -10,6 +10,13 @@ use yii\bootstrap4\Html;
 use yii\helpers\Url;
 
 AppAsset::register($this);
+$isAuth = false;
+if (isset($_COOKIE['Auth'])) {
+  if (substr($_COOKIE['Auth'], 0, 4) === 'true') {
+    $isAuth = true;
+  }
+}
+$userData = Yii::$app->user->identity;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -40,17 +47,27 @@ AppAsset::register($this);
         <div class="profile-intro">
           <span class="profile-intro-span">
             <div class="avatar">
-              <p>H</p>
+              <p><?= mb_substr($userData['firstname'], 0, 1) ?></p>
             </div>
             <div class="profile-intro__data">
-              <p>Никита</p>
+              <p><?= $userData['firstname'] ?></p>
             </div>
             <?= Html::img('@web/image/arrow_down.png', ['alt' => 'Удалить', 'class' => 'icon', 'id' => 'arrow']); ?>
           </span>
         </div>
         <div class="profile-intro__menu">
-          <a href="profile.html">Профиль</a>
-          <a href="#" class="warning">Выход</a>
+          <?php if ($userData && ($userData['typeUser'] === 'UserT' || $userData['typeUser'] === 'UserS')) : ?>
+            <a href=<?= Url::to(['users/profile']); ?>>Профиль</a>
+          <?php endif; ?>
+          <?php if ($userData && $userData['typeUser'] === 'Admin') : ?>
+            <a href=<?= Url::to(['admin/admin']); ?>>Панель</a>
+          <?php endif; ?>
+          <?= Html::beginForm(['/users/logout'], 'post')
+            . Html::submitButton(
+              'Выход',
+              ['class' => '', 'style' => "color:red;border: none; display: flex; justify-content: center;padding:none !important; margin-top:0 !important;"]
+            )
+            . Html::endForm() ?>
         </div>
       </span>
     </header>

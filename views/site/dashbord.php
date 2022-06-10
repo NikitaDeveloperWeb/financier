@@ -4,41 +4,28 @@
 
 $this->title = 'Financier | рабочий стол';
 
+use app\models\News;
+use yii\bootstrap4\Html as Bootstrap4Html;
 use yii\helpers\Url;
 ?>
 <h1>Новости</h1>
 <ul>
-  <li class="news-preview">
-    <span>
-      <h2>Последняя новость</h2>
-      <p>1.04.2022 г.</p>
-    </span>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius modi debitis corporis, ea repellendus iste
-      laboriosam doloribus veniam id explicabo nostrum consectetur amet atque? Illum corporis aliquid nesciunt
-      vel ipsum.</p>
-    <a href="news.html">Читать далее...</a>
-    <img src="https://w-dog.ru/wallpapers/12/11/441564363585097/svet-cvet-uzor-linii-obem-treugolnik.jpg" alt="" srcset="">
+  <?php
+  $newsAll = News::find()->all();
 
-  </li>
-  <li class="news-preview">
-    <span>
-      <h2>Последняя новость</h2>
-      <p>1.04.2022 г.</p>
-    </span>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius modi debitis corporis, ea repellendus iste
-      laboriosam doloribus veniam id explicabo nostrum consectetur amet atque? Illum corporis aliquid nesciunt
-      vel ipsum.</p>
-    <a href="news.html">Читать далее...</a>
-    <img src="https://w-dog.ru/wallpapers/12/11/441564363585097/svet-cvet-uzor-linii-obem-treugolnik.jpg" alt="" srcset="">
+  foreach ($newsAll as $post) {
+    $id = $post['id'];
+  ?>
 
-  </li>
-  <li class="news-preview">
-    <span>
-      <h2>Последняя новость</h2>
-      <p>1.04.2022 г.</p>
-    </span>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius modi debitis corporis, ea repellendus iste
-      laboriosam doloribus veniam id explicabo nostrum consectetur amet atque? Illum corporis aliquid nesciunt
-      vel ipsum.</p>
-    <a href="news.html">Читать далее...</a>
-    <img src="https://w-dog.ru/wallpapers/12/11/441564363585097/svet-cvet-uzor-linii-obem-treugolnik.jpg" alt="" srcset="">
+    <li class="news-preview">
+      <span>
+        <h2><?= $post['title'] ?></h2>
+        <p><?= $post['date'] ?></p>
+      </span>
+      <p><?= $post['subtitle'] ?></p>
+      <a href=<?= Url::to(['news/news/', 'id' => $id]); ?>>Читать далее...</a>
+      <?= Bootstrap4Html::img('@web/image/news/' . $post['image'] . '', ['alt' => 'Удалить', 'class' => 'icon', 'id' => 'arrow']); ?>
+
+    </li>
+  <? } ?>
+</ul>
