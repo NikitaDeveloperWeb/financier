@@ -19,7 +19,7 @@ if (isset($_POST['word'])) {
   <button class="button-main" type="submit">Найти</button>
 </form>
 <ul class="words">
-  <h2>Найдите слово...</h2>
+  <p class="gloss-text">Введите слово...</p>
 
 
 </ul>

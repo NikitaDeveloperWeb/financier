@@ -12,6 +12,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 ?>
 <h1>Курсы</h1>
+<p class="gloss-text">Подписанные курсы доступны в профиле.</p>
 <div class="curse-list">
   <?
   $curseAll = Curse::find()->all();

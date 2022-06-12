@@ -76,8 +76,8 @@ class SiteController extends Controller
     $this->layout = 'base';
     $modelReg = new SignUp();
     $modelReg->typeUser = 'UserS';
-    if (isset($_POST['Signup'])) {
-      $modelReg->attributes = Yii::$app->request->post('Signup');
+    if (isset($_POST['SignUp'])) {
+      $modelReg->attributes = Yii::$app->request->post('SignUp');
     }
     if ($modelReg->validate() &&  $modelReg->signup()) {
       return $this->redirect('index');

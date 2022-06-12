@@ -11,7 +11,7 @@ use yii\helpers\Url;
 <body>
   <div class="wrapper">
     <div class="wrapper__subwrapper">
-      <a href="#" class="logo">
+      <a href="<?= Url::to(['site/index']); ?>" class="logo">
         <h1>F</h1>
         inancier
       </a>
@@ -27,11 +27,15 @@ use yii\helpers\Url;
       <?= $form->field($modelReg, 'firstname')->textInput(['autofocus' => true, 'class' => 'field-main', 'placeholder' => 'Имя'])->label('') ?>
       <?= $form->field($modelReg, 'secondname')->textInput(['class' => 'field-main', 'placeholder' => 'Отчество'])->label('') ?>
       <?= $form->field($modelReg, 'email')->input('email', ['class' => 'field-main', 'placeholder' => 'Почта'])->label('') ?>
-      <?= $form->field($modelReg, 'phone')->textInput(['class' => 'field-main', 'placeholder' => 'Номер'])->label('') ?>
+      <?= $form->field($modelReg, 'phone')->textInput(['class' => 'field-main', 'placeholder' => 'Номер телефона'])->label('') ?>
       <?= $form->field($modelReg, 'password')->passwordInput(['class' => 'field-main', 'placeholder' => 'Пароль'])->label('') ?>
       <?= $form->field($modelReg, 'password_repeat')->passwordInput(['class' => 'field-main', 'placeholder' => 'Повторите пароль'])->label('') ?>
-
-      <button type="submit" class="button-main">Зарегистрироваться</button>
+      <span>
+        <input type="checkbox" id="politics" onclick="check();" value="" autocomplete="off" class="politicChechbox" />
+        <p> Нажимая на кнопку "Отправить", я даю согласие на
+          обработку персональных данных.</p>
+      </span>
+      <button type="submit" class="button-main button-disabled" id="signUpbut" disabled="">Отправить</button>
 
 
       <?php ActiveForm::end(); ?>
@@ -42,5 +46,17 @@ use yii\helpers\Url;
   </div>
 
 </body>
+<script>
+  function check() {
+    var submit = document.querySelector('#signUpbut');
+    if (document.querySelector('#politics').checked) {
+      submit.classList.remove('button-disabled');
+      submit.disabled = '';
+    } else {
+      submit.classList.add('button-disabled');
+      submit.disabled = 'disabled';
+    }
+  }
+</script>
 
 </html>

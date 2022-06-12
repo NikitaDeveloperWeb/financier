@@ -27,7 +27,7 @@ if ($userData['typeUser'] === 'UserS') {
     <a href=<?= Url::to(['users/edituser/']); ?>>Редактировать</a>
   </span>
   <div class="profile__data">
-    <h2><?= $userData['lastname'] . ' ' . $userData['firstname'] . $userData['secondname'] . '(' . $userData['username'] . ')' ?></h2>
+    <h2><?= $userData['lastname'] . ' ' . $userData['firstname'] . ' ' . $userData['secondname'] . '(' . $userData['username'] . ')' ?></h2>
     <p><strong>Почта: </strong> <?= $userData['email'] ?></p>
     <p><strong>Номер: </strong> <?= $userData['phone'] ?></p>
     <p><strong>Статус:</strong> <?= $typeUser ?></p>
